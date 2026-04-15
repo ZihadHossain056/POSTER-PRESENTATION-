@@ -21,79 +21,105 @@
         }
         .poster-container {
             max-width: 1100px;
-            margin: 20px auto;
+            margin: 10px auto;
             background-color: var(--paper-bg);
-            border: 12px solid white;
+            border: 6px solid white;
             box-shadow: 0 30px 60px rgba(0,0,0,0.6);
             border-radius: 4px;
+        }
+        @media (min-width: 768px) {
+            .poster-container {
+                margin: 20px auto;
+                border: 12px solid white;
+            }
         }
         .header-banner {
             background-color: var(--kyau-green);
             color: white;
-            padding: 35px;
+            padding: 20px 15px;
             text-align: center;
             border-bottom: 6px solid var(--sundarban-gold);
         }
+        @media (min-width: 768px) {
+            .header-banner { padding: 35px; }
+        }
         .info-card {
             background: white;
-            padding: 20px;
+            padding: 15px;
             border-radius: 8px;
             border-left: 6px solid var(--kyau-green);
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
         #simulation-viewport {
             width: 100%;
-            height: 550px;
-            background: linear-gradient(to bottom, #0f172a, #020617);
+            height: 400px;
+            background: #1e293b;
             position: relative;
             border-top: 5px solid var(--sundarban-gold);
             border-bottom: 5px solid var(--sundarban-gold);
+            overflow: hidden;
+        }
+        @media (min-width: 768px) {
+            #simulation-viewport { height: 550px; }
         }
         .pull-string-container {
             position: absolute;
-            bottom: 30px;
-            right: 50px;
+            bottom: 20px;
+            right: 20px;
             text-align: center;
+            z-index: 10;
         }
         .pulley-wheel {
-            width: 60px;
-            height: 60px;
-            border: 4px solid #64748b;
+            width: 40px;
+            height: 40px;
+            border: 3px solid #64748b;
             border-radius: 50%;
-            margin: 0 auto 10px;
+            margin: 0 auto 5px;
             position: relative;
             background: #334155;
         }
         .pulley-string {
-            width: 4px;
+            width: 3px;
             background: #f8fafc;
-            height: 100px;
+            height: 60px;
             margin: 0 auto;
             transition: height 0.1s;
         }
         .pull-handle { 
-            width: 100px; height: 100px; 
+            width: 80px; height: 80px; 
             background: radial-gradient(circle, #ef4444 0%, #991b1b 100%);
             border-radius: 50%; 
             cursor: pointer; display: flex; align-items: center; justify-content: center;
             font-weight: bold; color: white; user-select: none;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-            border: 4px solid #fecaca;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.4);
+            border: 3px solid #fecaca;
             transition: transform 0.1s;
+            font-size: 14px;
+            touch-action: none;
         }
-        .pull-handle:active { transform: translateY(20px) scale(0.95); }
+        .pull-handle:active { transform: translateY(15px) scale(0.95); }
         .ai-overlay {
-            position: absolute; top: 20px; left: 20px; width: 300px;
+            position: absolute; top: 10px; left: 10px; width: calc(100% - 20px);
+            max-width: 300px;
             background: rgba(15, 23, 42, 0.9); border: 1px solid #16a34a;
-            border-radius: 12px; padding: 15px; color: white;
+            border-radius: 12px; padding: 12px; color: white;
+            z-index: 10;
         }
         .save-banner {
             background-color: #166534;
             color: var(--sundarban-gold);
             text-align: center;
-            padding: 15px;
+            padding: 12px;
             font-weight: bold;
-            font-size: 1.4rem;
+            font-size: 1.1rem;
+        }
+        .loading-pulse {
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
         }
     </style>
 </head>
@@ -102,205 +128,291 @@
     <div class="poster-container">
         <!-- Poster Top Part -->
         <header class="header-banner">
-            <h2 class="text-2xl font-bold mb-1">Khawaza Younus Ali University</h2>
-            <h1 class="text-5xl font-black text-yellow-400 tracking-tight">THE IMPORTANCE OF SUNDARBAN</h1>
-            <p class="text-lg italic mt-2 opacity-90">— The Natural Shield of Bangladesh —</p>
+            <h2 class="text-lg md:text-2xl font-bold mb-1">Khawaza Younus Ali University</h2>
+            <h1 class="text-3xl md:text-5xl font-black text-yellow-400 tracking-tight">THE IMPORTANCE OF SUNDARBAN</h1>
+            <p class="text-sm md:text-lg italic mt-2 opacity-90">— The Natural Shield of Bangladesh —</p>
         </header>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 p-10 bg-[#f3f1e7]">
-            <div class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 p-5 md:p-10 bg-[#f3f1e7]">
+            <div class="space-y-4 md:space-y-6">
                 <div class="info-card">
-                    <h3 class="font-black text-green-900 text-lg mb-2 uppercase">Location & Status</h3>
-                    <ul class="text-sm text-gray-700 list-disc list-inside space-y-1">
+                    <h3 class="font-black text-green-900 text-md md:text-lg mb-2 uppercase">Location & Status</h3>
+                    <ul class="text-xs md:text-sm text-gray-700 list-disc list-inside space-y-1">
                         <li>World's largest mangrove forest.</li>
                         <li>UNESCO World Heritage Site.</li>
                         <li>South-western delta of Bangladesh.</li>
                     </ul>
                 </div>
                 <div class="info-card">
-                    <h3 class="font-black text-green-900 text-lg mb-2 uppercase">Ecological Benefits</h3>
-                    <ul class="text-sm text-gray-700 list-disc list-inside space-y-1">
+                    <h3 class="font-black text-green-900 text-md md:text-lg mb-2 uppercase">Ecological Benefits</h3>
+                    <ul class="text-xs md:text-sm text-gray-700 list-disc list-inside space-y-1">
                         <li>Massive Carbon sequestration.</li>
                         <li>Shields against Cyclone Sidr & Aila.</li>
                         <li>Maintains regional climate balance.</li>
                     </ul>
                 </div>
             </div>
-            <div class="space-y-6">
+            <div class="space-y-4 md:space-y-6">
                 <div class="info-card">
-                    <h3 class="font-black text-green-900 text-lg mb-2 uppercase">Biodiversity</h3>
-                    <p class="text-sm text-gray-700">Home to the <strong>Royal Bengal Tiger</strong>, spotted deer, crocodiles, and thousands of unique plant species like Sundari & Gewa.</p>
+                    <h3 class="font-black text-green-900 text-md md:text-lg mb-2 uppercase">Biodiversity</h3>
+                    <p class="text-xs md:text-sm text-gray-700">Home to the <strong>Royal Bengal Tiger</strong>, spotted deer, crocodiles, and thousands of unique plant species like Sundari & Gewa.</p>
                 </div>
                 <div class="info-card">
-                    <h3 class="font-black text-green-900 text-lg mb-2 uppercase">Economic Value</h3>
-                    <p class="text-sm text-gray-700">Livelihood for millions through fishing, honey collection (Mawals), and sustainable tourism.</p>
+                    <h3 class="font-black text-green-900 text-md md:text-lg mb-2 uppercase">Economic Value</h3>
+                    <p class="text-xs md:text-sm text-gray-700">Livelihood for millions through fishing, honey collection (Mawals), and sustainable tourism.</p>
                 </div>
             </div>
         </div>
 
-        <div class="save-banner">SAVE SUNDARBAN, SAVE BANGLADESH.</div>
+        <div class="save-banner uppercase">Save Sundarban, Save Bangladesh.</div>
 
         <!-- Interactive Simulation Part -->
         <div id="simulation-viewport">
             <div id="threejs-canvas"></div>
             
             <div class="ai-overlay" id="aiPanel">
-                <h4 class="text-green-400 font-bold mb-2 flex items-center gap-2">✨ Gemini AI Analysis</h4>
-                <div id="aiText" class="text-xs leading-relaxed opacity-90">Dori tanun (PULL) cyclone-er shokti bujhte ebong ghor-bari bachate.</div>
-                <button id="aiBtn" class="mt-3 w-full bg-green-700 hover:bg-green-800 text-white py-2 rounded text-[11px] font-bold transition-all">ANALYZE PROTECTION</button>
+                <h4 class="text-green-400 font-bold mb-1 md:mb-2 flex items-center gap-2 text-sm md:text-base">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path><path d="M5 3v4"></path><path d="M19 17v4"></path><path d="M3 5h4"></path><path d="M17 19h4"></path></svg>
+                    Gemini AI Analysis
+                </h4>
+                <div id="aiText" class="text-[10px] md:text-xs leading-relaxed opacity-90">Dori tanun (PULL) somudre dheu ebong cyclone-er shokti dekhun. Report paitay Analyze-e click koru.</div>
+                <button id="aiBtn" class="mt-2 md:mt-3 w-full bg-green-700 hover:bg-green-800 text-white py-1.5 md:py-2 rounded text-[10px] md:text-[11px] font-bold transition-all flex items-center justify-center gap-2">
+                    <span id="aiBtnText">ANALYZE SITUATION</span>
+                </button>
             </div>
 
             <!-- Pulley System UI -->
             <div class="pull-string-container">
                 <div class="pulley-wheel" id="wheel"></div>
                 <div class="pulley-string" id="string"></div>
-                <div class="pull-handle" id="pullBtn">PULL</div>
-                <p class="text-white text-[10px] mt-2 font-bold opacity-70">MECHANICAL PULL</p>
+                <div class="pull-handle" id="pullBtn">PULL (TANUN)</div>
+                <p class="text-white text-[9px] md:text-[10px] mt-2 font-bold opacity-70">MECHANICAL SYSTEM</p>
             </div>
         </div>
 
         <!-- Footer Team Info -->
-        <div class="p-8 bg-[#e5e7eb] text-center border-t border-gray-300">
-            <p class="text-xs font-black text-gray-500 mb-4 uppercase tracking-widest">Project Team Members</p>
-            <div class="flex flex-wrap justify-center gap-3">
-                <span class="bg-white border-2 border-green-600 px-4 py-2 rounded-lg font-bold text-sm shadow-sm">Zihad (25) - Leader</span>
-                <span class="bg-white border px-4 py-2 rounded-lg text-sm shadow-sm">Shamim (06)</span>
-                <span class="bg-white border px-4 py-2 rounded-lg text-sm shadow-sm">Naisa (27)</span>
-                <span class="bg-white border px-4 py-2 rounded-lg text-sm shadow-sm">Rupom (33)</span>
-                <span class="bg-white border px-4 py-2 rounded-lg text-sm shadow-sm">Rumki (34)</span>
+        <div class="p-6 md:p-8 bg-[#e5e7eb] text-center border-t border-gray-300">
+            <p class="text-[10px] md:text-xs font-black text-gray-500 mb-3 md:mb-4 uppercase tracking-widest">Project Team Members</p>
+            <div class="flex flex-wrap justify-center gap-2 md:gap-3">
+                <span class="bg-white border-2 border-green-600 px-3 md:px-4 py-1.5 md:py-2 rounded-lg font-bold text-xs md:text-sm shadow-sm">Zihad (25) - Leader</span>
+                <span class="bg-white border px-3 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm shadow-sm">Shamim (06)</span>
+                <span class="bg-white border px-3 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm shadow-sm">Naisa (27)</span>
+                <span class="bg-white border px-4 py-2 rounded-lg text-xs md:text-sm shadow-sm">Rupom (33)</span>
+                <span class="bg-white border px-4 py-2 rounded-lg text-xs md:text-sm shadow-sm">Rumki (34)</span>
             </div>
-            <p class="mt-6 text-[10px] text-gray-400 font-bold">IF SUNDARBAN SURVIVES, BANGLADESH SURVIVES.</p>
+            <p class="mt-4 md:mt-6 text-[9px] md:text-[10px] text-gray-400 font-bold">PROTECTING LIVES THROUGH NATURE.</p>
         </div>
     </div>
 
     <script>
-        let scene, camera, renderer, cyclone, forest, houses;
+        let scene, camera, renderer, cyclone, forest, houses, water, sky;
         let isPulling = false;
         let speed = 0;
-        const apiKey = "";
+        const apiKey = ""; // Provided by the environment
 
-        function initSimulation() {
-            scene = new THREE.Scene();
-            const container = document.getElementById('simulation-viewport');
-            camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
-            camera.position.set(6, 6, 10);
-            camera.lookAt(0, 0, 0);
-
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(container.clientWidth, container.clientHeight);
-            document.getElementById('threejs-canvas').appendChild(renderer.domElement);
-
-            scene.add(new THREE.AmbientLight(0xffffff, 0.7));
-            const sun = new THREE.DirectionalLight(0xffffff, 1);
-            sun.position.set(10, 10, 10);
-            scene.add(sun);
-
-            // Cyclone (Cotton/Tula Style Spiral)
-            cyclone = new THREE.Group();
-            for(let i=0; i<25; i++) {
-                const radius = 0.5 + (i * 0.15);
-                const cloudGeo = new THREE.SphereGeometry(radius * 0.3, 8, 8);
-                const cloudMat = new THREE.MeshPhongMaterial({ 
-                    color: 0xcbd5e1, 
-                    transparent: true, 
-                    opacity: 0.4 
-                });
-                const cloud = new THREE.Mesh(cloudGeo, cloudMat);
-                
-                const angle = i * 0.5;
-                cloud.position.set(Math.cos(angle) * radius, i * 0.1, Math.sin(angle) * radius);
-                cyclone.add(cloud);
+        async function fetchWithRetry(url, options, retries = 5, backoff = 1000) {
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                return await response.json();
+            } catch (error) {
+                if (retries > 0) {
+                    await new Promise(resolve => setTimeout(resolve, backoff));
+                    return fetchWithRetry(url, options, retries - 1, backoff * 2);
+                }
+                throw error;
             }
-            cyclone.position.set(-5, 0, 0);
-            scene.add(cyclone);
-
-            // Sundarban Forest (The Barrier)
-            forest = new THREE.Group();
-            for(let j=0; j<150; j++) {
-                const h = 0.6 + Math.random() * 1.5;
-                const treeGeo = new THREE.ConeGeometry(0.15, h, 6);
-                treeGeo.translate(0, h/2, 0);
-                const treeMat = new THREE.MeshPhongMaterial({ color: 0x064e3b });
-                const tree = new THREE.Mesh(treeGeo, treeMat);
-                tree.position.set(Math.random()*4 - 1, 0, Math.random()*12 - 6);
-                forest.add(tree);
-            }
-            scene.add(forest);
-
-            // Village Houses (Behind the forest)
-            houses = new THREE.Group();
-            for(let k=0; k<15; k++) {
-                const house = new THREE.Group();
-                const body = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.4, 0.5), new THREE.MeshPhongMaterial({color: 0x92400e}));
-                const roof = new THREE.Mesh(new THREE.ConeGeometry(0.4, 0.3, 4), new THREE.MeshPhongMaterial({color: 0x78350f}));
-                roof.position.y = 0.35;
-                roof.rotation.y = Math.PI/4;
-                house.add(body, roof);
-                house.position.set(Math.random()*2 + 5, 0.2, Math.random()*8 - 4);
-                houses.add(house);
-            }
-            scene.add(houses);
-
-            // Pull Mechanism
-            const btn = document.getElementById('pullBtn');
-            const str = document.getElementById('string');
-            const wheel = document.getElementById('wheel');
-
-            btn.addEventListener('mousedown', () => { isPulling = true; });
-            window.addEventListener('mouseup', () => { isPulling = false; });
-            document.getElementById('aiBtn').addEventListener('click', askGemini);
-
-            animate();
         }
 
         async function askGemini() {
             const aiText = document.getElementById('aiText');
-            const intensity = (speed * 1000).toFixed(0);
-            aiText.innerText = "Analyzing coastal defense...";
+            const aiBtn = document.getElementById('aiBtn');
+            const aiBtnText = document.getElementById('aiBtnText');
             
-            const prompt = `Current Cyclone Intensity is ${intensity}. Write 2 short sentences in Bangla (Latin or Bengali) about how Sundarban trees protect the village houses behind them.`;
-            
+            // Set Loading State
+            aiBtn.disabled = true;
+            aiBtnText.innerText = "ANALYZING...";
+            aiText.classList.add('loading-pulse');
+            aiText.innerText = "Gemini is processing current environmental data...";
+
+            const currentIntensity = (speed * 100).toFixed(0);
+            const systemPrompt = "You are an environmental expert specializing in the Sundarbans. Analyze the current cyclone intensity (0-100) and explain in 2-3 short, impactful Bangla sentences how the Sundarban forest is acting as a natural shield for the coastal village. Mention trees, wave breaking, and protection of houses.";
+            const userQuery = `Current Cyclone Intensity: ${currentIntensity}%. Provide a status report on village safety.`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+
             try {
-                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-                });
-                const data = await res.json();
-                aiText.innerText = data.candidates[0].content.parts[0].text;
-            } catch(e) { aiText.innerText = "Error analyzing data."; }
+                const result = await fetchWithRetry(
+                    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`,
+                    {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    }
+                );
+
+                const responseText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                aiText.innerText = responseText || "Analysis complete but no text returned.";
+            } catch (error) {
+                aiText.innerText = "Service temporarily unavailable. Sundarban trees are continuing to buffer the wind despite sensor issues.";
+            } finally {
+                aiBtn.disabled = false;
+                aiBtnText.innerText = "ANALYZE SITUATION";
+                aiText.classList.remove('loading-pulse');
+            }
+        }
+
+        function initSimulation() {
+            scene = new THREE.Scene();
+            const container = document.getElementById('simulation-viewport');
+            
+            camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(7, 5, 12);
+            camera.lookAt(0, 0, 0);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            document.getElementById('threejs-canvas').appendChild(renderer.domElement);
+
+            scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+            const sun = new THREE.DirectionalLight(0xffffff, 1);
+            sun.position.set(10, 10, 10);
+            scene.add(sun);
+
+            // 1. Stormy Sky
+            const skyGeo = new THREE.SphereGeometry(50, 32, 32);
+            const skyMat = new THREE.MeshBasicMaterial({ color: 0x1e293b, side: THREE.BackSide });
+            sky = new THREE.Mesh(skyGeo, skyMat);
+            scene.add(sky);
+
+            // 2. The Sea
+            const waterGeo = new THREE.PlaneGeometry(100, 100, 50, 50);
+            const waterMat = new THREE.MeshPhongMaterial({ 
+                color: 0x1e40af, 
+                shininess: 80, 
+                transparent: true, 
+                opacity: 0.85,
+                flatShading: true
+            });
+            water = new THREE.Mesh(waterGeo, waterMat);
+            water.rotation.x = -Math.PI / 2;
+            water.position.y = -0.1;
+            scene.add(water);
+
+            // 3. Land
+            const landGeo = new THREE.PlaneGeometry(10, 100);
+            const landMat = new THREE.MeshPhongMaterial({ color: 0x14532d });
+            const land = new THREE.Mesh(landGeo, landMat);
+            land.rotation.x = -Math.PI / 2;
+            land.position.x = 5; 
+            scene.add(land);
+
+            // Cyclone
+            cyclone = new THREE.Group();
+            for(let i=0; i<35; i++) {
+                const r = 0.5 + (i * 0.2);
+                const cloudGeo = new THREE.SphereGeometry(r * 0.4, 8, 8);
+                const cloudMat = new THREE.MeshPhongMaterial({ color: 0xf1f5f9, transparent: true, opacity: 0.5 });
+                const cloud = new THREE.Mesh(cloudGeo, cloudMat);
+                const angle = i * 0.6;
+                cloud.position.set(Math.cos(angle) * r, i * 0.15, Math.sin(angle) * r);
+                cyclone.add(cloud);
+            }
+            cyclone.position.set(-6, 0.5, 0); 
+            scene.add(cyclone);
+
+            // Forest
+            forest = new THREE.Group();
+            for(let j=0; j<180; j++) {
+                const h = 0.7 + Math.random() * 2;
+                const treeGeo = new THREE.ConeGeometry(0.18, h, 6);
+                treeGeo.translate(0, h/2, 0);
+                const treeMat = new THREE.MeshPhongMaterial({ color: 0x064e3b });
+                const tree = new THREE.Mesh(treeGeo, treeMat);
+                tree.position.set(Math.random()*4 + 1.5, 0, Math.random()*20 - 10);
+                forest.add(tree);
+            }
+            scene.add(forest);
+
+            // Houses
+            houses = new THREE.Group();
+            for(let k=0; k<15; k++) {
+                const house = new THREE.Group();
+                const body = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.5, 0.6), new THREE.MeshPhongMaterial({color: 0x92400e}));
+                const roof = new THREE.Mesh(new THREE.ConeGeometry(0.5, 0.4, 4), new THREE.MeshPhongMaterial({color: 0x78350f}));
+                roof.position.y = 0.45;
+                roof.rotation.y = Math.PI/4;
+                house.add(body, roof);
+                house.position.set(Math.random()*2 + 6, 0.25, Math.random()*14 - 7);
+                houses.add(house);
+            }
+            scene.add(houses);
+
+            // UI Interaction
+            const btn = document.getElementById('pullBtn');
+            const startPull = (e) => { e.preventDefault(); isPulling = true; };
+            const endPull = () => { isPulling = false; };
+            
+            btn.addEventListener('mousedown', startPull);
+            window.addEventListener('mouseup', endPull);
+            btn.addEventListener('touchstart', startPull, {passive: false});
+            window.addEventListener('touchend', endPull);
+
+            document.getElementById('aiBtn').addEventListener('click', askGemini);
+            window.addEventListener('resize', onWindowResize);
+            animate();
+        }
+
+        function onWindowResize() {
+            const container = document.getElementById('simulation-viewport');
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
         }
 
         function animate() {
             requestAnimationFrame(animate);
             const str = document.getElementById('string');
             const wheel = document.getElementById('wheel');
+            const isMobile = window.innerWidth < 768;
 
             if(isPulling) {
-                speed = Math.min(speed + 0.008, 0.5);
-                str.style.height = "120px";
-                wheel.style.transform = `rotate(${Date.now() * 0.5}deg)`;
+                speed = Math.min(speed + 0.01, 0.6);
+                str.style.height = isMobile ? "80px" : "120px";
+                wheel.style.transform = `rotate(${Date.now() * 0.7}deg)`;
             } else {
-                speed *= 0.97;
-                str.style.height = "100px";
+                speed *= 0.96;
+                str.style.height = isMobile ? "60px" : "100px";
             }
 
-            // Cyclone Movement
+            // Cyclone Logic
             cyclone.rotation.y += speed;
-            const cycloneScale = 1 + speed * 2;
-            cyclone.scale.set(cycloneScale, 1, cycloneScale);
+            const cScale = 1 + speed * 2;
+            cyclone.scale.set(cScale, 1, cScale);
 
-            // Forest Bending (Protection effect)
+            // Water Waves Logic
+            const pos = water.geometry.attributes.position;
+            const time = Date.now() * 0.0015;
+            for (let i = 0; i < pos.count; i++) {
+                const x = pos.getX(i);
+                const y = pos.getY(i);
+                const waveHeight = (Math.sin(x * 0.5 + time) + Math.cos(y * 0.5 + time)) * (0.05 + speed * 0.6);
+                pos.setZ(i, waveHeight);
+            }
+            pos.needsUpdate = true;
+
+            // Forest Bending Logic
             forest.children.forEach((tree, i) => {
-                const shake = Math.sin(Date.now() * 0.02 + i) * speed;
+                const shake = Math.sin(Date.now() * 0.03 + i) * speed * 0.7;
                 tree.rotation.z = (speed * 1.8) + shake;
             });
 
-            // Houses Stay Safe (Very slight shake only if speed is extreme)
-            houses.children.forEach((house, i) => {
-                const safetyBuffer = speed > 0.4 ? (speed - 0.4) : 0;
-                house.rotation.z = Math.sin(Date.now() * 0.05 + i) * safetyBuffer;
-            });
+            // Sky Color Shift Logic
+            sky.material.color.setHSL(0.6, 0.4, 0.2 - (speed * 0.15));
 
             renderer.render(scene, camera);
         }
